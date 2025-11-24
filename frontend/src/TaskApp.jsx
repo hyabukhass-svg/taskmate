@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function TaskApp() {
   const [tasks, setTasks] = useState([]);
@@ -10,56 +11,87 @@ export default function TaskApp() {
   const [darkMode, setDarkMode] = useState(false);
 
   // -------------------------------
-  // Load dummy tasks
+  // Set API URL based on environment
   // -------------------------------
-  useEffect(() => {
-    setTasks([
-      { id: 1, title: "Sample task 1", completed: false },
-      { id: 2, title: "Sample task 2", completed: true },
-    ]);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
+  // -------------------------------
+  // Load tasks & dummy quote
+  // -------------------------------
+  const fetchTasks = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/tasks`);
+      setTasks(res.data);
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
     setQuote("Stay motivated! — Unknown");
   }, []);
 
   // -------------------------------
   // Add Task
   // -------------------------------
-  const addTask = () => {
+  const addTask = async () => {
     if (!newTask.trim()) return;
-    const newId = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
-    setTasks([...tasks, { id: newId, title: newTask, completed: false }]);
-    setNewTask("");
+    try {
+      const res = await axios.post(`${API_URL}/tasks`, {
+        title: newTask,
+        completed: false,
+      });
+      setTasks([...tasks, res.data]);
+      setNewTask("");
+    } catch (err) {
+      console.error("Error adding task:", err);
+    }
   };
 
   // -------------------------------
   // Delete Task
   // -------------------------------
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/tasks/${id}`);
+      setTasks(tasks.filter((t) => t.id !== id));
+    } catch (err) {
+      console.error("Error deleting task:", err);
+    }
   };
 
   // -------------------------------
   // Toggle Completed
   // -------------------------------
-  const toggleComplete = (id) => {
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-      )
-    );
+  const toggleComplete = async (task) => {
+    try {
+      const res = await axios.put(`${API_URL}/tasks/${task.id}`, {
+        title: task.title,
+        completed: !task.completed,
+      });
+      setTasks(tasks.map((t) => (t.id === task.id ? res.data : t)));
+    } catch (err) {
+      console.error("Error updating task:", err);
+    }
   };
 
   // -------------------------------
   // Save Edited Task
   // -------------------------------
-  const saveEdit = (id) => {
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, title: editText } : t
-      )
-    );
-    setEditing(null);
-    setEditText("");
+  const saveEdit = async (id) => {
+    try {
+      const currentTask = tasks.find((t) => t.id === id);
+      const res = await axios.put(`${API_URL}/tasks/${id}`, {
+        title: editText,
+        completed: currentTask.completed,
+      });
+      setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
+      setEditing(null);
+      setEditText("");
+    } catch (err) {
+      console.error("Error editing task:", err);
+    }
   };
 
   // -------------------------------
@@ -108,7 +140,7 @@ export default function TaskApp() {
                 ...theme.completeButton,
                 backgroundColor: task.completed ? "#A3D9A5" : "#FFD9D9",
               }}
-              onClick={() => toggleComplete(task.id)}
+              onClick={() => toggleComplete(task)}
             >
               {task.completed ? "✓" : "○"}
             </button>
@@ -143,7 +175,10 @@ export default function TaskApp() {
               Edit
             </button>
 
-            <button style={theme.deleteButton} onClick={() => deleteTask(task.id)}>
+            <button
+              style={theme.deleteButton}
+              onClick={() => deleteTask(task.id)}
+            >
               ✖
             </button>
           </li>
