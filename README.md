@@ -53,6 +53,9 @@ node server.js
 cd frontend
 npm start
 
+--
+Watch the video here: https://uncg-my.sharepoint.com/:v:/g/personal/hyabukhass_uncg_edu/IQAj80_2qUV8SpCG4f_Ix-oMAa3NdZU5U7Zu9j41D75IQYc?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=WFpQGs
+
 ------
 ##Open in browser
 
