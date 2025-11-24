@@ -1,0 +1,120 @@
+/* Global background */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #fbeff4; /* soft pink */
+}
+
+/* App wrapper */
+.app-wrapper {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Header */
+.header h1 {
+  font-size: 48px;
+  color: #6a4a3c; /* mocha brown */
+  margin: 10px 0 0;
+}
+
+.subtitle {
+  color: #a28370;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+/* Main content */
+.content {
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* Task Card */
+.task-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+}
+
+/* Section title */
+.section-title {
+  color: #6a4a3c;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+/* Add Task */
+.add-task {
+  display: flex;
+  gap: 10px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d7b3a7;
+  font-size: 16px;
+}
+
+.add-task button {
+  padding: 12px 18px;
+  background: #f7a8c4; /* bright pink button */
+  border: none;
+  color: #6a4a3c;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-task button:hover {
+  background: #ff86af;
+}
+
+/* Task List */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* Each Task */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  background: #fdf2f6;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 10px 0;
+  align-items: center;
+  border: 1px solid #f2cedc;
+}
+
+.task-item span {
+  cursor: pointer;
+  font-size: 17px;
+  color: #6a4a3c;
+}
+
+.task-item .completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #c06a6a;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  color: red;
+}
